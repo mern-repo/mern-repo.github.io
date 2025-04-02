@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-export default function Dashboard() {
+export default function Add() {
   axios.defaults.withCredentials = true
   const navigate = useNavigate()
   const [auth, setAuth] = useState(false)
@@ -26,8 +26,7 @@ export default function Dashboard() {
       {
         auth ?
           <div>
-            <h1>Welcome</h1>
-            <button><Link to={`/add`}>Add Record</Link></button>
+            <h1>Add Page</h1>
             <button onClick={handleLogout}>Logout</button>
           </div> :
           <div>

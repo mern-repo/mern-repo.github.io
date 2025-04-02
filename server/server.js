@@ -2,20 +2,17 @@ import express from 'express'
 import cors from 'cors'
 import mysql from 'mysql'
 import cookieParser from 'cookie-parser'
-import bodyParser from 'body-parser'
+// import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
-import bcrypt from 'bcrypt'
+import bcrypt, { hash } from 'bcrypt'
 import 'dotenv/config'
 
 const app = express()
 const salt = 10
-const MYSQL_CREDENTIALS = process.env.MYSQL_CREDITS
 const PORT = process.env.PORT
-const ORIGIN = process.env.ORIGIN
-const METHODS = process.env.METHODS
 
 // LOCAL DB
-const db_ = mysql.createConnection({
+const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
@@ -23,7 +20,7 @@ const db_ = mysql.createConnection({
 })
 
 // HOSTGATOR DB
-const db = mysql.createConnection({
+const db_ = mysql.createConnection({
   host: '192.185.17.41',
   user: 'webadmin_chinabank',
   password: 'chinaAdmin!',
@@ -38,6 +35,7 @@ app.use(cors({
 
 app.use(express.json())
 app.use(cookieParser())
+// app.use(bodyParser())
 
 app.get('/', (_req, res) => {
   res.send('Response')
@@ -53,34 +51,69 @@ app.get('/getusers/', (req, res) => {
 
 app.post('/register/', (req, res) => {
   const q = 'insert into login (`username`,`password`) values  (?)'
-  const values = [
-    req.body.username,
-    req.body.password,
-  ]
-  db.query(q, [values], (err, result) => {
+  bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
     if (err) return res.json(err)
-    if (result) {
-      return res.json({ Status: 'Success' })
+    const values = [
+      req.body.username,
+      hash
+    ]
+    db.query(q, [values], (err, result) => {
+      if (err) return res.json(err)
+      if (result) {
+        return res.json({ Status: 'Success' })
+      } else {
+        return res.json({ Message: 'Invalid' })
+      }
+    })
+  })
+})
+
+app.post('/login/', (req, res) => {
+  const q = 'select * from login where `username`=?'
+  const values = [
+    req.body.username
+  ]
+  db.query(q, [...values], (err, result) => {
+    if (err) return res.json(err)
+    if (result.length > 0) {
+      bcrypt.compare(req.body.password.toString(), result[0].password, (err, response) => {
+        if (err) return res.json(err)
+        if (response) {
+          const name = result[0].name
+          const token = jwt.sign({ name }, 'jwt-secret-token', { expiresIn: '1d' })
+          res.cookie('token', token)
+          return res.json({ Status: 'Success' })
+        } else {
+          return res.json({ Message: 'Invalid' })
+        }
+      })
     } else {
       return res.json({ Message: 'Invalid' })
     }
   })
 })
 
-app.post('/login/', (req, res) => {
-  const q = 'select * from login where `username`=? AND `password`=?'
-  const values = [
-    req.body.username,
-    req.body.password,
-  ]
-  db.query(q, [...values], (err, result) => {
-    if (err) return res.json(err)
-    if (result.length > 0) {
-      return res.json({ Status: 'Success' })
-    } else {
-      return res.json({ Message: 'Invalid' })
-    }
-  })
+const verifyUser = (req, res, next) => {
+  const token = req.cookies.token
+  if (!token) {
+    return res.json({ Message: 'Invalid Token' })
+  } else {
+    jwt.verify(token, 'jwt-secret-token', (err, _result) => {
+      if (err) {
+        return res.json({ Message: 'Invalid Secret Token' })
+      } else {
+        next()
+      }
+    })
+  }
+}
+app.get('/authorize/', verifyUser, (_req, res) => {
+  return res.json({ Status: 'Success' })
+})
+
+app.use('/logout/', (_req, res) => {
+  res.clearCookie('token')
+  return res.json({ Status: 'Success' })
 })
 
 app.listen(PORT, () => { console.log('Server Running on PORT:', PORT) })

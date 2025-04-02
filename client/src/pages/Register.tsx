@@ -6,10 +6,13 @@ export default function Register() {
   axios.defaults.withCredentials = true
   const navigate = useNavigate()
   const [values, setValues] = useState('')
-  const handleOnChange = () => { }
+  const handleOnChange = (e: any) => {
+    setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }))
+  }
   const handleOnSubmit = (e: any) => {
     e.preventDefault()
-    axios.post('https://mern-repo-github-io.onrender.com/register/', values)
+    // axios.post('https://mern-repo-github-io.onrender.com/register/', values)
+    axios.post('http://localhost:8080/register/', values)
     navigate('/')
   }
   return (

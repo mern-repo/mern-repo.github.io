@@ -9,7 +9,7 @@ import 'dotenv/config'
 
 const app = express()
 const salt = 10
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 8080
 
 // LOCAL DB
 const db_ = mysql.createConnection({
@@ -29,11 +29,12 @@ const db = mysql.createConnection({
 db.connect()
 
 app.use(cors({
-  origin: ['http://localhost:8000', 'http://localhost:8080', 'https://mern-repo.github.io', 'https://mern-repo-github-io.onrender.com', 'http://mern.theseashore.ph/'],
+  // origin: ['http://localhost:8000', 'http://localhost:8080', 'https://mern-repo.github.io', 'https://mern-repo-github-io.onrender.com', 'http://mern.theseashore.ph/'],
+  origin: ['http://mern.theseashore.ph/'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
-  preflightContinue: false,
-  optionsSuccessStatus: 204,
+  preflightContinue: true,
+  optionsSuccessStatus: 200,
   allowedHeaders: ['Origin', 'Content-Type', 'Accept', 'Authorization', 'X-Request-With', 'Access-Control-Allow-Origin'],
 }))
 

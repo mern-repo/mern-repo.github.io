@@ -32,8 +32,6 @@ app.use(cors({
   origin: ['http://localhost:8000', 'http://localhost:8080', 'https://mern-repo.github.io', 'https://mern-repo-github-io.onrender.com'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
-  // optionsSuccessStatus: 200,
-  // allowedHeaders: ['Access-Control-Allow-Origin']
 }))
 
 app.use(express.json())
@@ -79,12 +77,12 @@ app.post('/login/', (req, res) => {
   db.query(q, [...values], (err, result) => {
     if (err) return res.json(err)
     if (result.length > 0) {
+      const name = result[0].name
+      const token = jwt.sign({ name }, 'jwt-secret-token', { expiresIn: '1d' })
+      res.cookie('token', token)
       bcrypt.compare(req.body.password.toString(), result[0].password, (err, response) => {
         if (err) return res.json(err)
         if (response) {
-          const name = result[0].name
-          const token = jwt.sign({ name }, 'jwt-secret-token', { expiresIn: '1d' })
-          res.cookie('token', token)
           return res.json({ Status: 'Success' })
         } else {
           return res.json({ Message: 'Invalid' })

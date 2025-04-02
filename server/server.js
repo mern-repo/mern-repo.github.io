@@ -12,7 +12,7 @@ const salt = 10
 const PORT = process.env.PORT || 8080
 
 // LOCAL DB
-const db = mysql.createConnection({
+const db_ = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
@@ -20,7 +20,7 @@ const db = mysql.createConnection({
 })
 
 // HOSTGATOR DB
-const db_ = mysql.createConnection({
+const db = mysql.createConnection({
   host: '192.185.17.41',
   user: 'webadmin_chinabank',
   password: 'chinaAdmin!',

@@ -26,6 +26,7 @@ const db = mysql.createConnection({
   password: 'chinaAdmin!',
   database: 'webadmin_crud'
 })
+db.connect()
 
 app.use(cors({
   origin: ['http://localhost:8000', 'http://localhost:8080', 'https://mern-repo.github.io', 'https://mern-repo-github-io.onrender.com'],

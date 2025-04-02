@@ -15,7 +15,7 @@ export default function Dashboard() {
           setAuth(false)
         }
       })
-  }, [])
+  }, [setAuth])
   const handleLogout = () => {
     axios.get('https://mern-repo-github-io.onrender.com/logout/')
     navigate('/')

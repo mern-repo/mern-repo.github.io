@@ -32,6 +32,9 @@ app.use(cors({
   origin: ['http://localhost:8000', 'http://localhost:8080', 'https://mern-repo.github.io', 'https://mern-repo-github-io.onrender.com', 'http://mern.theseashore.ph/'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Origin', 'Content-Type', 'Accept', 'Authorization', 'X-Request-With', 'Access-Control-Allow-Origin'],
 }))
 
 app.use(express.json())

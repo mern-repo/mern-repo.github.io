@@ -4,6 +4,7 @@
   "description": "mysql express react node",
   "main": "server.js",
   "type": "module",
+  "proxy": "https://mern-repo-github-io.onrender.com",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"

@@ -16,9 +16,8 @@ const db = mysql.createConnection({
   database: 'webadmin_crud'
 })
 
-
+# HTACCESS
 <IfModule mod_rewrite.c>
-
   RewriteEngine On
   RewriteBase /
   RewriteRule ^index\.html$ - [L]
@@ -26,5 +25,7 @@ const db = mysql.createConnection({
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
   RewriteRule . /index.html [L]
-
 </IfModule>
+
+# SSH
+ssh webadmin@192.185.17.41 -p2222

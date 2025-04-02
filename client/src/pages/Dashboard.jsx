@@ -7,7 +7,7 @@ export default function Dashboard() {
   const navigate = useNavigate()
   const [auth, setAuth] = useState(false)
   useEffect(() => {
-    axios.get('https://mern-repo-github-io.onrender.com/authorize/')
+    axios.get('http://localhost:8080/authorize/')
       .then((result) => {
         if (result.data.Status === 'Success') {
           setAuth(true)
@@ -17,7 +17,7 @@ export default function Dashboard() {
       })
   }, [setAuth])
   const handleLogout = () => {
-    axios.get('https://mern-repo-github-io.onrender.com/logout/')
+    axios.get('http://localhost:8080/logout/')
     navigate('/')
   }
   return (
@@ -26,6 +26,7 @@ export default function Dashboard() {
         auth ?
           <div>
             <h1>Welcome</h1>
+            <button><Link to={`/add`}>Add Record</Link></button>
             <button onClick={handleLogout}>Logout</button>
           </div> :
           <div>

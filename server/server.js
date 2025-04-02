@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import mysql from 'mysql'
 import cookieParser from 'cookie-parser'
-// import bodyParser from 'body-parser'
+import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
 import bcrypt, { hash } from 'bcrypt'
 import 'dotenv/config'
@@ -29,14 +29,14 @@ const db = mysql.createConnection({
 db.connect()
 
 app.use(cors({
-  origin: ['http://localhost:8000', 'http://localhost:8080', 'https://mern-repo.github.io', 'https://mern-repo-github-io.onrender.com', 'http://mern.theseashore.ph'],
+  origin: ['http://localhost:8000', 'http://localhost:8080', 'https://mern-repo.github.io', 'https://mern-repo-github-io.onrender.com', 'https://mern.theseashore.ph'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }))
 
 app.use(express.json())
 app.use(cookieParser())
-// app.use(bodyParser())
+app.use(bodyParser.json())
 
 app.get('/', (_req, res) => {
   res.send('Response')

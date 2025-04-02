@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-export default function Add() {
+export default function Dashboard() {
   axios.defaults.withCredentials = true
   const navigate = useNavigate()
   const [auth, setAuth] = useState(false)
@@ -15,18 +15,17 @@ export default function Add() {
           setAuth(false)
         }
       })
-      .catch((err) => { console.log(err) })
   }, [])
   const handleLogout = () => {
     axios.get('http://localhost:8080/logout/')
-    navigate(`/`)
+    navigate('/')
   }
   return (
     <>
       {
         auth ?
           <div>
-            <h1>Add Page</h1>
+            <h1>Welcome</h1>
             <button onClick={handleLogout}>Logout</button>
           </div> :
           <div>

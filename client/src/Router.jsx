@@ -1,10 +1,9 @@
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route } from 'react-router-dom'
 
-import Layout from "./sections/Layout"
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import Dashboard from "./pages/Dashboard"
-import Add from "./pages/Add"
+import Layout from './sections/Layout'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Dashboard from './pages/Dashboard'
 
 export default function Router() {
   return (
@@ -14,9 +13,9 @@ export default function Router() {
           <Route index element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/add" element={<Add />} />
         </Route>
       </Routes>
+
     </>
   )
 }

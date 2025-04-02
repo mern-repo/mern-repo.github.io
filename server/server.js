@@ -69,7 +69,7 @@ app.post('/register/', (req, res) => {
 })
 
 app.post('/login/', (req, res) => {
-  const q = 'select * from login where `username`=?'
+  const q = 'select * from login where `username` = ?'
   const values = [
     req.body.username
   ]
@@ -111,7 +111,7 @@ app.get('/authorize/', verifyUser, (_req, res) => {
   return res.json({ Status: 'Success' })
 })
 
-app.use('/logout/', (_req, res) => {
+app.get('/logout/', (_req, res) => {
   res.clearCookie('token')
   return res.json({ Status: 'Success' })
 })

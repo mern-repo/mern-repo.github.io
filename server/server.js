@@ -31,7 +31,7 @@ db.connect()
 app.use(cors({
   // origin: ['http://localhost:8000', 'http://localhost:8080', 'https://mern-repo.github.io', 'https://mern-repo-github-io.onrender.com'],
   origin: ['http://localhost:8000', 'https://mern-repo.github.io'],
-  // origin: '*',
+  // origin: "*",
   // optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,

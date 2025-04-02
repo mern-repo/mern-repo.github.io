@@ -7,8 +7,8 @@ export default defineConfig({
   server: {
     hot: true,
     port: 8000,
-    proxy: {
-      '/': 'https://mern-repo-github-io.onrender.com'
-    }
+    // proxy: {
+    //   '/': 'https://mern-repo-github-io.onrender.com'
+    // }
   }
 })

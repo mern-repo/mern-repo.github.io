@@ -29,8 +29,7 @@ const db = mysql.createConnection({
 db.connect()
 
 app.use(cors({
-  // origin: ['http://localhost:8000', 'http://localhost:8080', 'https://mern-repo.github.io', 'https://mern-repo-github-io.onrender.com'],
-  origin: '*',
+  origin: ['http://localhost:8000', 'http://localhost:8080', 'https://mern-repo.github.io', 'https://mern-repo-github-io.onrender.com'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
   // optionsSuccessStatus: 200,

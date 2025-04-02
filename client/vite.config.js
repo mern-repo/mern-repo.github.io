@@ -6,9 +6,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     hot: true,
-    port: 8000,
-    // proxy: {
-    //   '/': 'https://mern-repo-github-io.onrender.com'
-    // }
+    port: 8000
   }
 })

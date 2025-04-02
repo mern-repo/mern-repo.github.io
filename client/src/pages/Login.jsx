@@ -11,7 +11,7 @@ export default function Login() {
   }
   const handleonSubmit = (e) => {
     e.preventDefault()
-    axios.post('https://mern-repo-github-io.onrender.com/login/', values)
+    axios.post('http://localhost:8080/login/', values)
       .then((result) => {
         if (result.data.Status === 'Success') {
           navigate('/dashboard')

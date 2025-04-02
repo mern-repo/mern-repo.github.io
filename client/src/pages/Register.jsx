@@ -11,7 +11,7 @@ export default function Register() {
   }
   const handleonSubmit = (e) => {
     e.preventDefault()
-    axios.post('https://mern-repo-github-io.onrender.com/register/', values)
+    axios.post('http://localhost:8080/register/', values)
       .then((result) => {
         if (result.data.Status === 'Success') {
           navigate('/')

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
@@ -11,7 +11,7 @@ export default function Login() {
   }
   const handleonSubmit = (e) => {
     e.preventDefault()
-    axios.post('https://mern-repo-github-io.onrender.com/login/', values)
+    axios.post('http://localhost:8080/login/', values)
       .then((result) => {
         if (result.data.Status === 'Success') {
           navigate('/dashboard')
@@ -21,6 +21,7 @@ export default function Login() {
       })
       .catch((err) => { console.log(err) })
   }
+
   return (
     <>
       <h1>Login Page</h1>
@@ -30,6 +31,7 @@ export default function Login() {
         <input type='text' name='password' onChange={handleonChange} />
         <button>Login</button>
       </form>
+
     </>
   )
 }

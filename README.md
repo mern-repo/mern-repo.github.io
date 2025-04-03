@@ -8,6 +8,7 @@ https://github.com/mern-repo/mern-repo.github.io
 https://dashboard.render.com/login
 
 # HOSTGATOR
+https://mern.theseashore.ph/
 
 const db = mysql.createConnection({
   host: '192.185.17.41',

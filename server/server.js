@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import mysql from 'mysql'
 import cookieParser from 'cookie-parser'
-import bodyParser from 'body-parser'
+// import bodyParser from 'body-parser'
 import jwt from 'jsonwebtoken'
 import bcrypt, { hash } from 'bcrypt'
 import 'dotenv/config'
@@ -12,7 +12,7 @@ const salt = 10
 const PORT = process.env.PORT || 8080
 
 // LOCAL DB
-const db_ = mysql.createConnection({
+const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
@@ -20,7 +20,7 @@ const db_ = mysql.createConnection({
 })
 
 // HOSTGATOR DB
-const db = mysql.createConnection({
+const db_ = mysql.createConnection({
   host: '192.185.17.41',
   user: 'webadmin_chinabank',
   password: 'chinaAdmin!',
@@ -36,7 +36,7 @@ app.use(cors({
 
 app.use(express.json())
 app.use(cookieParser())
-app.use(bodyParser.json())
+// app.use(bodyParser.json())
 
 app.get('/', (_req, res) => {
   res.send('Response')
@@ -83,6 +83,10 @@ app.post('/login/', (req, res) => {
           const name = result[0].name
           const token = jwt.sign({ name }, 'jwt-secret-token', { expiresIn: '1d' })
           res.cookie('token', token)
+
+          if (typeof window !== 'undefined') {
+            window.localStorage.setItem('token', token)
+          }
           return res.json({ Status: 'Success' })
         } else {
           return res.json({ Message: 'Invalid' })
